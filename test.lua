@@ -1,4 +1,7 @@
 local A, b 
 
-A = matrix()
-print(A[0])
+A = {}
+for i= 0,5 do
+    A[i] = i
+    print(table.concat(A))
+end
