@@ -1,5 +1,7 @@
 function love.load()
+    _G.map = require("Map") 
     _G.a = 10
+    _G.map = Map:new({size = 10, name = "colle"})
     
 end
 
@@ -8,8 +10,8 @@ function love.update(dt)
 end
 
 function love.draw()
-    local w = love.graphics.getWidth()
-    local h = love.graphics.getHeight()
-    love.graphics.circle("fill",w/2,h/2,40)
-    love.graphics.print(a)
+    love.graphics.print(map.size)
+    --love.graphics.print(a)
+    love.graphics.print("porco dio", 300,300)
 end
+
