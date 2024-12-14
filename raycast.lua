@@ -26,7 +26,7 @@ Raycast = {
         local floor_x = math.floor(pos.x)
         local ray = {}
         local x0,y0 = 0 , 0
-        if alpha >= 0 and alpha < 45 then
+        if alpha >= 0 and alpha < 90 then
             x0 = pos.x - floor_x
             y0 = x0 * tg + pos.y
 
@@ -34,8 +34,7 @@ Raycast = {
                 ray.x = x0
                 ray.y = y0
                 return ray
-            
-            else if floor_x ~= 0 then
+            elseif floor_x ~= 0 then
                 local yn = y0
                 for i = floor_x +1 , 1, -1 do
                     yn = yn + tg
@@ -46,7 +45,11 @@ Raycast = {
                     end
                 end
             end
+        elseif alpha > 90 and alpha < 180 then
+            
+        elseif alpha > 180 and alpha < 270 then
+            
+        else
 
-            end
-        end
+        end                
     end
