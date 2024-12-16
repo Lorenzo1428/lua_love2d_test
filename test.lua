@@ -10,6 +10,6 @@ local pos = {
     y = 1.5
 }
 local alpha = 20
-local ray = rayCast:Cast(arr,pos,alpha,50)
+local ray = rayCast:Cast_complete(arr,pos,alpha,50, 100)
 
 --print(ray[1].x )
