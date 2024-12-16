@@ -29,6 +29,9 @@ Raycast = {
     end
 
     function Raycast:dist(pos1,pos2)
+        if pos1.x == -1 or pos2.x == -1 then
+            return 1e13
+        end
         local q1 = (pos1.x - pos2.x)^2
         local q2 = (pos1.y - pos2.y)^2
         local dist  = math.sqrt(q1 + q2)
@@ -45,12 +48,14 @@ Raycast = {
             alpha_i = alpha + i*rate
             rays_h[i] = self:Horizontal_Cast(map_table,pos,alpha_i)
             rays_v[i] = self:Vertical_Cast(map_table,pos,alpha_i)
+
             if Raycast:dist(rays_h[i],pos) < Raycast:dist(rays_v[i],pos) then
                 rays[i] = rays_h[i]
             else
                 rays[i] = rays_v[i]
             end
             --print("Horiziontal: " .. rays_h[i].x,rays_h[i].y,"Vertical: " .. rays_v[i].x, rays_v[i].y)
+            print(rays[i].x,rays[i].y)
         end
         return rays
     end
@@ -67,7 +72,7 @@ Raycast = {
             floor_x = math.floor(pos.x)
             x0 = pos.x - floor_x
             y0 = x0/tg + pos.y
-            if math.floor(y0) > 0 and map_table[floor_x][math.floor(y0)] == "1" then
+            if math.floor(y0) < #map_table[1] and map_table[floor_x][math.floor(y0)] == "1" then
                 ray.x = floor_x
                 ray.y = y0
                 return ray
@@ -76,7 +81,7 @@ Raycast = {
                 for i = floor_x - 1 , 1, -1 do
                     yn = 1/tg + yn
                     --print(i,yn)
-                    if math.floor(yn) > 0 and map_table[i][math.floor(yn)] == "1" then
+                    if math.floor(yn) < #map_table[1] and map_table[i][math.floor(yn)] == "1" then
                         ray.x = i
                         ray.y = yn
                         return ray
@@ -146,7 +151,7 @@ Raycast = {
             x0 = ceil_x - pos.x
             y0 = x0/tg + pos.y
             
-            if math.floor(y0) > 0 and map_table[ceil_x][math.floor(y0)] == "1" then
+            if math.floor(y0) < #map_table[1] and map_table[ceil_x][math.floor(y0)] == "1" then
                 ray.x = ceil_x
                 ray.y = y0
                 return ray
@@ -154,7 +159,7 @@ Raycast = {
                 local yn = x0
                 for i = ceil_x + 1, #map_table do
                     yn = yn + 1/tg
-                    if math.floor(yn) > 0 and map_table[i][math.floor(yn)] == "1" then
+                    if math.floor(yn) < #map_table[1] and map_table[i][math.floor(yn)] == "1" then
                         ray.x = i
                         ray.y = yn
                         return ray
@@ -183,9 +188,9 @@ Raycast = {
                 ray.y = ceil_y
                 ray.x = x0
                 return ray
-            elseif ceil_y ~= #map_table then
+            elseif ceil_y ~= #map_table[1] then
                 local xn = x0
-                for i = ceil_y + 1 , #map_table do
+                for i = ceil_y + 1 , #map_table[1] do
                     xn = xn - tg
                     if math.floor(xn) > 0 and map_table[math.floor(xn)][i] == "1" then
                         ray.y = i
@@ -231,7 +236,7 @@ Raycast = {
             y0 = pos.y - floor_y 
             x0 = pos.y + y0*tg
 
-            if math.floor(x0) > 0 and map_table[math.floor(x0)][floor_y] == "1" then
+            if math.floor(x0) < #map_table and map_table[math.floor(x0)][floor_y] == "1" then
                 ray.y = floor_y
                 ray.x = x0
                 return ray
@@ -239,7 +244,7 @@ Raycast = {
                 local xn = x0
                 for i = floor_y - 1, 1, -1 do
                     xn = xn + 1*tg
-                    if math.floor(xn) > 0 and map_table[math.floor(xn)][i] == "1" then
+                    if math.floor(xn) < map_table and map_table[math.floor(xn)][i] == "1" then
                         ray.y = i
                         ray.x = xn
                         return ray
@@ -257,15 +262,15 @@ Raycast = {
             y0 = ceil_y - pos.y
             x0 = y0*tg + pos.x
             
-            if math.floor(x0) > 0 and map_table[math.floor(x0)][ceil_y] == "1" then
+            if math.floor(x0) < #map_table and map_table[math.floor(x0)][ceil_y] == "1" then
                 ray.y = ceil_y
                 ray.x = x0
                 return ray
-            elseif ceil_y ~= map_table then
+            elseif ceil_y ~= map_table[1] then
                 local xn = x0
-                for i = ceil_y + 1, #map_table do
+                for i = ceil_y + 1, #map_table[1] do
                     xn = xn + 1/tg
-                    if math.floor(xn) > 0 and map_table[math.floor(xn)][i] == "1" then
+                    if math.floor(xn) < #map_table and map_table[math.floor(xn)][i] == "1" then
                         ray.y = i
                         ray.x = xn
                         return ray
