@@ -22,8 +22,8 @@ end
 function love.draw()
     local pos1, pos2 = {},{}
     for i = 0, #ray do
-        pos1.x = (height - ray[i])/2
-        pos2.x = (height + ray[i])/2
+        pos1.x = (height - ray[#ray - i])/2
+        pos2.x = (height + ray[#ray - i])/2
         pos1.y, pos2.y = i ,i 
         love.graphics.setColor(0,0,1)
         love.graphics.line(pos1.y,pos1.x,pos2.y,pos2.x)
@@ -34,13 +34,13 @@ end
 function love.keypressed(key, isrepeat)
     if key == "left" then
         if pos.x + 0.1 < #arr then
-            pos.x = pos.x + 0.1
+            pos.x = pos.x - 0.1
             _G.ray = raycast:Cast_complete(arr,pos,alpha,width,height)
         end
     end
     if key == "right" then
         if pos.x - 0.1 > 1 then 
-            pos.x = pos.x - 0.1
+            pos.x = pos.x + 0.1
             _G.ray = raycast:Cast_complete(arr,pos,alpha,width,height)
         end
     end
@@ -55,6 +55,12 @@ function love.keypressed(key, isrepeat)
             pos.y = pos.y - 0.1
             _G.ray = raycast:Cast_complete(arr,pos,alpha,width,height)
         end
+    end
+    if key == "a" then
+        if alpha < 360 and alpha > 0 then
+            _G.alpha = alpha - 10
+        end
+        _G.ray = raycast:Cast_complete(arr,pos,alpha,width,height)
     end
 end
 

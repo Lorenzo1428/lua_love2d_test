@@ -9,7 +9,7 @@ local pos = {
     x = 3.5,
     y = 1.5
 }
-local alpha = 20
+local alpha = 90
 --print(#arr[1])
 local ray = rayCast:Cast_complete(arr,pos,alpha,50, 100)
 

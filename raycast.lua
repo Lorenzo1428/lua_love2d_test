@@ -99,7 +99,7 @@ Raycast = {
             x0 = pos.x - floor_x
             y0 = pos.y - x0/tg
 
-            if math.floor(y0) > 0 and map_table[floor_x][math.floor(y0)] == "1" then
+            if math.floor(y0) > 1 and map_table[floor_x][math.floor(y0)] == "1" then
                 ray.x = floor_x
                 ray.y = y0
                 return ray
@@ -107,7 +107,7 @@ Raycast = {
                 local yn = y0
                 for i = floor_x - 1, 1, -1 do 
                     yn = yn - 1/tg
-                    if math.floor(yn) > 0 and map_table[i][math.floor(yn)] == "1" then
+                    if math.floor(yn) > 1 and map_table[i][math.floor(yn)] == "1" then
                         ray.x = i
                         ray.y = yn
                         return ray
@@ -125,7 +125,7 @@ Raycast = {
             x0 = ceil_x - pos.x
             y0 = pos.y - x0/ tg
 
-            if math.floor(y0) > 0 and map_table[ceil_x][math.floor(y0)] == "1" then
+            if math.floor(y0) > 1 and map_table[ceil_x][math.floor(y0)] == "1" then
                 ray.x = ceil_x
                 ray.y = y0
                 return ray
@@ -133,7 +133,7 @@ Raycast = {
                 local yn = y0
                 for i = ceil_x + 1, #map_table do
                     yn = yn - 1/tg
-                    if math.floor(yn) > 0 and map_table[i][math.floor(yn)]== "1" then
+                    if math.floor(yn) > 1 and map_table[i][math.floor(yn)]== "1" then
                         ray.x = i
                         ray.y = yn
                         return ray
@@ -143,7 +143,7 @@ Raycast = {
             ray.x = -1
             ray.y = -1
             return ray
-        else
+        elseif alpha > 270 and alpha < 360 then
             alpha_deg = math.rad(360 - alpha)
             tg = math.tan(alpha_deg)
             ray.z = alpha_deg
@@ -169,6 +169,9 @@ Raycast = {
             ray.x = -1
             ray.y = -1
             return ray
+        else 
+            ray.x = -1
+            ray.y = -1
         end
     end
 
@@ -184,7 +187,7 @@ Raycast = {
             ceil_y = math.ceil(pos.y)
             y0 = ceil_y - pos.y
             x0 = pos.x - y0*tg
-            if math.floor(x0) > 0 and map_table[math.floor(x0)][ceil_y] == "1" then
+            if math.floor(x0) > 1 and map_table[math.floor(x0)][ceil_y] == "1" then
                 ray.y = ceil_y
                 ray.x = x0
                 return ray
@@ -192,7 +195,7 @@ Raycast = {
                 local xn = x0
                 for i = ceil_y + 1 , #map_table[1] do
                     xn = xn - tg
-                    if math.floor(xn) > 0 and map_table[math.floor(xn)][i] == "1" then
+                    if math.floor(xn) > 1 and map_table[math.floor(xn)][i] == "1" then
                         ray.y = i
                         ray.x = xn
                         return ray
@@ -210,7 +213,7 @@ Raycast = {
             y0 = pos.y - floor_y
             x0 = pos.x - y0*tg
 
-            if math.floor(x0) > 0 and map_table[math.floor(x0)][floor_y] == "1" then
+            if math.floor(x0) > 1 and map_table[math.floor(x0)][floor_y] == "1" then
                 ray.y = floor_y
                 ray.x = x0
                 return ray
@@ -218,7 +221,7 @@ Raycast = {
                 local xn = x0
                 for i = floor_y - 1, 1, -1 do 
                     xn = xn - 1*tg
-                    if math.floor(xn) > 0 and map_table[math.floor(xn)][i] == "1" then
+                    if math.floor(xn) > 1 and map_table[math.floor(xn)][i] == "1" then
                         ray.y = i
                         ray.x = xn
                         return ray
@@ -254,7 +257,7 @@ Raycast = {
             ray.x = -1
             ray.y = -1
             return ray
-        else
+        elseif alpha > 270 and alpha < 360 then
             alpha_deg = math.rad(360 - alpha)
             tg = math.tan(alpha_deg)
             ray.z = alpha_deg
@@ -277,6 +280,10 @@ Raycast = {
                     end
                 end
             end
+            ray.x = -1
+            ray.y = -1
+            return ray
+        else
             ray.x = -1
             ray.y = -1
             return ray
