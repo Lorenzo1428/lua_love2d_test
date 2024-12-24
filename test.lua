@@ -6,11 +6,11 @@ rayCast = Raycast:new()
 local arr  = map:Readfile("matrix.txt")
 
 local pos = {
-    x = 3.5,
+    x = 2.5,
     y = 1.5
 }
-local alpha = 90
+local alpha = 30
 --print(#arr[1])
-local ray = rayCast:Cast_complete(arr,pos,alpha,50, 100)
+local ray = rayCast:Cast_complete(arr,pos,alpha,20, 100)
 
 --print(ray[1].x )

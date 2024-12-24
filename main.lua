@@ -7,8 +7,8 @@ function love.load()
 
     _G.arr  = map:Readfile("matrix.txt")
     _G.pos = {
-        x = 4.5,
-        y = 3.0
+        x = 3.5,
+        y = 2.5
     }
     _G.alpha =20
     _G.height = love.graphics.getHeight()
@@ -21,13 +21,17 @@ end
 
 function love.draw()
     local pos1, pos2 = {},{}
+    love.graphics.points(100.3,100)
+    love.graphics.points(100.3,101)
     for i = 0, #ray do
-        pos1.x = (height - ray[#ray - i])/2
-        pos2.x = (height + ray[#ray - i])/2
-        pos1.y, pos2.y = i ,i 
-        love.graphics.setColor(0,0,1)
-        love.graphics.line(pos1.y,pos1.x,pos2.y,pos2.x)
-        --love.graphics.print(pos.x)
+        if ray[#ray-i] ~= -1 then
+            pos1.x = (height - ray[#ray - i])/2
+            pos2.x = (height + ray[#ray - i])/2
+            pos1.y, pos2.y = i ,i 
+            love.graphics.setColor(0,0,1)
+            love.graphics.line(pos1.y,pos1.x,pos2.y,pos2.x)
+            --love.graphics.print(pos.x)
+        end
     end
 end
 
@@ -58,9 +62,16 @@ function love.keypressed(key, isrepeat)
     end
     if key == "a" then
         if alpha < 360 and alpha > 0 then
-            _G.alpha = alpha - 10
+            _G.alpha = alpha + 10
         end
         _G.ray = raycast:Cast_complete(arr,pos,alpha,width,height)
     end
+
+    if key == "d" then
+        if alpha < 360 and alpha > 0 then
+            _G.alpha = alpha - 10
+        end
+        _G.ray = raycast:Cast_complete(arr,pos,alpha,width,height)
+    end    
 end
 
